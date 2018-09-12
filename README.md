@@ -2,6 +2,9 @@
 
 A simple Java library based on https://github.com/jgarff/rpi_ws281x .
 
+This is a fork from https://github.com/Cacodaimon/rpi_ws281x4j -- adjusted build directories and test params to my needs (HHR).
+Below is the original read-me.
+
 ## Build
 
 The `build.sh` script checks out the code from https://github.com/jgarff/rpi_ws281x ,

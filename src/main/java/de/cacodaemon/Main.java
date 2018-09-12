@@ -10,63 +10,35 @@ import de.cacodaemon.rpiws28114j.WS2811Channel;
  * Is not included in generated JAR.
  */
 public class Main {
+    public static void clear(int count) {
+        for (int j = 0; j < count; j++) {
+            WS2811.setPixel(j, Color.BLACK);
+        }
+    }
 
     public static void main(String[] args) throws InterruptedException {
-        WS2811.init(new WS2811Channel(10, 8 * 8, StripType.WS2811_STRIP_RBG, false, 8));
+        int count = 4 * 19;
+        System.out.println("Initializing strip...");
+        WS2811.init(new WS2811Channel(/* GPIO */ 18, /* LED count */ count, StripType.WS2811_STRIP_GRB, /* invert */ false, /* brightness */ 255));
 
-        for (int i = -8; i < 8; i++) {
-            for (int j = 0; j < 64; j++) {
-                WS2811.setPixel(j, Color.BLACK);
-            }
+        System.out.println("Setting pixels...");
+        clear(count);
+        WS2811.setPixel(0, Color.RED);
+        WS2811.setPixel(1, Color.GREEN);
+        WS2811.setPixel(2, Color.BLUE);
 
-            WS2811.setPixel(
-                    9 + i,
-                    Color.fromRandom(),
-                    Color.fromRandom(),
-                    Color.fromRandom(),
-                    Color.fromRandom(),
-                    Color.fromRandom(),
-                    Color.fromRandom()
-            );
+        System.out.println("Calling render()");
+        WS2811.render();
+        Thread.sleep(2000);
 
-            WS2811.setPixel(
-                    17 + i,
-                    Color.fromRandom(),
-                    Color.fromRandom(),
-                    Color.fromRandom(),
-                    Color.fromRandom(),
-                    Color.fromRandom(),
-                    Color.fromRandom()
-            );
-
-            WS2811.setPixel(
-                    27 + i,
-                    Color.fromRandom(),
-                    Color.fromRandom()
-            );
-
-            WS2811.setPixel(
-                    35 + i,
-                    Color.fromRandom(),
-                    Color.fromRandom()
-            );
-
-            WS2811.setPixel(
-                    43 + i,
-                    Color.fromRandom(),
-                    Color.fromRandom()
-            );
-
-            WS2811.setPixel(
-                    51 + i,
-                    Color.fromRandom(),
-                    Color.fromRandom()
-            );
-
-            WS2811.render();
-            Thread.sleep(200);
-        }
+        System.out.println("Clearing...");
+        clear(count);
+        WS2811.render();
+        Thread.sleep(100);
+        System.out.println("Closing...");
 
         WS2811.close();
+        System.out.println("Exiting...");
+        System.exit(0);
     }
 }
